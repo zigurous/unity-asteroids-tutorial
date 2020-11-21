@@ -26,20 +26,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The UI displayed during the game over state.")]
     public GameObject gameOverUI;
 
-    private int _score = 0;
-
     /// <summary>
     /// The current score of the player.
     /// </summary>
-    public int score
-    {
-        get => _score;
-        private set
-        {
-            _score = value;
-            this.scoreText.text = _score.ToString();
-        }
-    }
+    public int score { get; private set; }
 
     /// <summary>
     /// The UI text that displays the player's score.
@@ -47,20 +37,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("The UI text that displays the player's score.")]
     public Text scoreText;
 
-    private int _lives = 3;
-
     /// <summary>
     /// The current amount of lives of the player.
     /// </summary>
-    public int lives
-    {
-        get => _lives;
-        private set
-        {
-            _lives = value;
-            this.livesText.text = _lives.ToString();
-        }
-    }
+    public int lives { get; private set; }
 
     /// <summary>
     /// The UI text that displays the player's lives.
@@ -76,7 +56,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Start a new game once the player presses 'Return'
-        if (_lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
+        if (this.lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
             NewGame();
         }
     }
@@ -85,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         // Clear the scene of asteroids so we can start fresh
         Asteroid[] asteroids = FindObjectsOfType<Asteroid>();
-        for (int i = 0 ; i < asteroids.Length; i++) {
+        for (int i = 0; i < asteroids.Length; i++) {
             Destroy(asteroids[i].gameObject);
         }
 
@@ -93,8 +73,8 @@ public class GameManager : MonoBehaviour
         this.gameOverUI.SetActive(false);
 
         // Reset score and lives
-        this.score = 0;
-        this.lives = 3;
+        SetScore(0);
+        SetLives(3);
 
         // Spawn the player
         Respawn();
@@ -116,11 +96,11 @@ public class GameManager : MonoBehaviour
 
         // Increase the score based on the size of the asteroid
         if (asteroid.size < 0.7f) {
-            this.score += 100; // small asteroid
+            SetScore(this.score + 100); // small asteroid
         } else if (asteroid.size < 1.4f) {
-            this.score += 50; // medium asteroid
+            SetScore(this.score + 50); // medium asteroid
         } else {
-            this.score += 20; // large asteroid
+            SetScore(this.score + 25); // large asteroid
         }
     }
 
@@ -131,8 +111,8 @@ public class GameManager : MonoBehaviour
         this.explosionEffect.transform.position = player.transform.position;
         this.explosionEffect.Play();
 
-        // Decrement lives
-        this.lives--;
+        // Decrement lives by 1
+        SetLives(this.lives - 1);
 
         // Check if a game over state has been reached (no lives)
         if (this.lives <= 0) {
@@ -147,6 +127,20 @@ public class GameManager : MonoBehaviour
     {
         // Show the game over UI
         this.gameOverUI.SetActive(true);
+    }
+
+    private void SetScore(int score)
+    {
+        // Set the score and update the UI text
+        this.score = score;
+        this.scoreText.text = score.ToString();
+    }
+
+    private void SetLives(int lives)
+    {
+        // Set the lives and update the UI text
+        this.lives = lives;
+        this.livesText.text = lives.ToString();
     }
 
 }

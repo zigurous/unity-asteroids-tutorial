@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Handles the movement and shooting of the
@@ -21,14 +21,6 @@ public class Player : MonoBehaviour
     public float rotationSpeed = 0.1f;
 
     /// <summary>
-    /// The amount of seconds the player must wait
-    /// before shooting again. A higher value ensures
-    /// the player cannot shoot too quickly.
-    /// </summary>
-    [Tooltip("The amount of seconds the player must wait before shooting again. A higher value ensures the player cannot shoot too quickly.")]
-    public float shootCooldown = 0.15f;
-
-    /// <summary>
     /// The object that is cloned when creating a bullet.
     /// </summary>
     [Tooltip("The object that is cloned when creating a bullet.")]
@@ -45,11 +37,6 @@ public class Player : MonoBehaviour
     /// it to move forward.
     /// </summary>
     private bool _thrusting = false;
-
-    /// <summary>
-    /// Whether the player is waiting to shoot again.
-    /// </summary>
-    private bool _shootingCooldown = false;
 
     /// <summary>
     /// The rigidbody component attached to the player.
@@ -102,19 +89,6 @@ public class Player : MonoBehaviour
         // Spawn a bullet and project it the direction the player is aiming
         Bullet bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.Project(this.transform.up);
-
-        // Start a cooldown, if set, to prevent the
-        // player from shooting too rapidly
-        if (this.shootCooldown > 0.0f)
-        {
-            _shootingCooldown = true;
-            Invoke(nameof(EndShootingCooldown), this.shootCooldown);
-        }
-    }
-
-    private void EndShootingCooldown()
-    {
-        _shootingCooldown = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

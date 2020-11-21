@@ -665,7 +665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrustSpeed: 1
   rotationSpeed: 0.1
-  shootCooldown: 0.15
   bulletPrefab: {fileID: 2758569942672203454, guid: d8d55dfacb762f64cbf4c05cc402a4de,
     type: 3}
 --- !u!1 &556392472

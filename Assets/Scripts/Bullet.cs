@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
     /// The maximum amount of time the bullet will
     /// stay alive after being projected.
     /// </summary>
-    [Tooltip("The maximum amount of time the asteroid can stay alive after which it is destroyed.")]
+    [Tooltip("The maximum amount of time the bullet will stay alive after being projected.")]
     public float maxLifetime = 10.0f;
 
     /// <summary>
@@ -28,6 +28,7 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
+        // Store references to the bullet's components
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 

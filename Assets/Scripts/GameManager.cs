@@ -10,13 +10,20 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// The player component.
     /// </summary>
+    [Tooltip("The player component.")]
     public Player player;
 
+    /// <summary>
+    /// The particle effect that is played when an
+    /// asteroid is destroyed and when the player dies.
+    /// </summary>
+    [Tooltip("The particle effect that is played when an asteroid is destroyed and when the player dies.")]
     public ParticleSystem explosionEffect;
 
     /// <summary>
     /// The UI displayed during the game over state.
     /// </summary>
+    [Tooltip("The UI displayed during the game over state.")]
     public GameObject gameOverUI;
 
     private int _score = 0;
@@ -37,6 +44,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// The UI text that displays the player's score.
     /// </summary>
+    [Tooltip("The UI text that displays the player's score.")]
     public Text scoreText;
 
     private int _lives = 3;
@@ -57,6 +65,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// The UI text that displays the player's lives.
     /// </summary>
+    [Tooltip("The UI text that displays the player's lives.")]
     public Text livesText;
 
     private void Start()
@@ -66,6 +75,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Start a new game once the player presses 'Return'
         if (_lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
             NewGame();
         }
@@ -92,14 +102,15 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
+        // Move the player back to the center
+        // and reactivate their controls
         this.player.transform.position = Vector3.zero;
         this.player.gameObject.SetActive(true);
     }
 
     public void AsteroidDestroyed(Asteroid asteroid)
     {
-        // Play the explosion effect at the
-        // location of the asteroid
+        // Play the explosion effect at the location of the asteroid
         this.explosionEffect.transform.position = asteroid.transform.position;
         this.explosionEffect.Play();
 
@@ -134,6 +145,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        // Show the game over UI
         this.gameOverUI.SetActive(true);
     }
 

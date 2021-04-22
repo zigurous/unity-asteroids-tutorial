@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Handles the movement and shooting of the
-/// player ship.
+/// Handles the movement and shooting of the player ship.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -21,20 +20,32 @@ public class Player : MonoBehaviour
     public float rotationSpeed = 0.1f;
 
     /// <summary>
+    /// The amount of seconds it takes for the player to respawn after dying.
+    /// </summary>
+    [Tooltip("The amount of seconds it takes for the player to respawn after dying.")]
+    public float respawnDelay = 3.0f;
+
+    /// <summary>
+    /// The amount of seconds the player has invulnerability after respawning.
+    /// This is to prevent the player from instantly dying if spawning into an
+    /// asteroid.
+    /// </summary>
+    [Tooltip("The amount of seconds the player has invulnerability after respawning. This is to prevent the player from instantly dying if spawning into an asteroid.")]
+    public float respawnInvulnerability = 3.0f;
+
+    /// <summary>
     /// The object that is cloned when creating a bullet.
     /// </summary>
     [Tooltip("The object that is cloned when creating a bullet.")]
     public Bullet bulletPrefab;
 
     /// <summary>
-    /// The current direction the player is turning.
-    /// 1=left, -1=right, 0=none
+    /// The current direction the player is turning. 1=left, -1=right, 0=none
     /// </summary>
     private float _turnDirection = 0.0f;
 
     /// <summary>
-    /// Whether the ship's thrusts are activated causing
-    /// it to move forward.
+    /// Whether the ship's thrusts are activated causing it to move forward.
     /// </summary>
     private bool _thrusting = false;
 
@@ -51,12 +62,11 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        // Turn off collisions for a few seconds after
-        // spawning to ensure the player has enough
-        // time to safely move away from asteroids
+        // Turn off collisions for a few seconds after spawning to ensure the
+        // player has enough time to safely move away from asteroids
         this.gameObject.layer = LayerMask.NameToLayer("Ignore Collisions");
 
-        Invoke(nameof(TurnOnCollisions), 3.0f);
+        Invoke(nameof(TurnOnCollisions), this.respawnInvulnerability);
     }
 
     private void Update()
@@ -64,8 +74,8 @@ public class Player : MonoBehaviour
         // Activate thrust when pressing the 'w' key or 'up arrow' key
         _thrusting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
-        // Set the turn direction of the ship based on
-        // which input key is being held
+        // Set the turn direction of the ship based on which input key is being
+        // held
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             _turnDirection = 1.0f;
         } else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
@@ -74,8 +84,8 @@ public class Player : MonoBehaviour
             _turnDirection = 0.0f;
         }
 
-        // Shoot a bullet each time the 'space' key is pressed
-        // or when the mouse left button is clicked
+        // Shoot a bullet each time the 'space' key is pressed or when the mouse
+        // left button is clicked
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
             Shoot();
         }
@@ -118,9 +128,8 @@ public class Player : MonoBehaviour
             // Stop all player controls and rendering of the ship
             this.gameObject.SetActive(false);
 
-            // Inform the game manager the player has died
-            // so the lives can be updated along with any
-            // other state changes
+            // Inform the game manager the player has died so the lives can be
+            // updated along with any other state changes
             FindObjectOfType<GameManager>().PlayerDeath(this);
         }
     }

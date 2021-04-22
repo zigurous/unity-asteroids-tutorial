@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         } else {
             // Respawn the player if they have more lives
-            Invoke(nameof(Respawn), 3.0f);
+            Invoke(nameof(Respawn), player.respawnDelay);
         }
     }
 

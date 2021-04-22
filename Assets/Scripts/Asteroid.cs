@@ -9,8 +9,7 @@
 public class Asteroid : MonoBehaviour
 {
     /// <summary>
-    /// An array of sprites of which one is randomly
-    /// assigned to the asteroid.
+    /// An array of sprites of which one is randomly assigned to the asteroid.
     /// </summary>
     [Tooltip("An array of sprites of which one is randomly assigned to the asteroid.")]
     public Sprite[] sprites;
@@ -40,8 +39,8 @@ public class Asteroid : MonoBehaviour
     public float movementSpeed = 50.0f;
 
     /// <summary>
-    /// The maximum amount of time the asteroid can
-    /// stay alive after which it is destroyed.
+    /// The maximum amount of time the asteroid can stay alive after which it is
+    /// destroyed.
     /// </summary>
     [Tooltip("The maximum amount of time the asteroid can stay alive after which it is destroyed.")]
     public float maxLifetime = 30.0f;
@@ -81,8 +80,7 @@ public class Asteroid : MonoBehaviour
 
     public void SetTrajectory(Vector2 direction)
     {
-        // Move the asteroid along the trajectory
-        // factoring in its speed
+        // Move the asteroid along the trajectory factoring in its speed
         _rigidbody.AddForce(direction * this.movementSpeed);
     }
 
@@ -91,33 +89,31 @@ public class Asteroid : MonoBehaviour
         // Check if the asteroid was hit by a bullet
         if (collision.gameObject.tag == "Bullet")
         {
-            // Check if the asteroid is large enough to
-            // split in half (both parts must be greater
-            // than the minimum size)
+            // Check if the asteroid is large enough to split in half (both
+            // parts must be greater than the minimum size)
             if ((this.size * 0.5f) >= this.minSize)
             {
-                // Split the asteroid into two parts
-                // by creating two new asteroids
+                // Split the asteroid into two parts by creating two new
+                // asteroids
                 CreateSplit();
                 CreateSplit();
             }
 
-            // Inform the game manager the asteroid
-            // was destroyed so score can be calculated
+            // Inform the game manager the asteroid was destroyed so score can
+            // be calculated
             FindObjectOfType<GameManager>().AsteroidDestroyed(this);
 
-            // Destroy the current asteroid since it is
-            // either replaced by two new asteroid objects
-            // or small enough to be destroyed by the bullet
+            // Destroy the current asteroid since it is either replaced by two
+            // new asteroid objects or small enough to be destroyed by the
+            // bullet
             Destroy(this.gameObject);
         }
     }
 
     private Asteroid CreateSplit()
     {
-        // Set the new asteroid poistion to be the same
-        // as the current asteroid but with a slight offset
-        // so they do not spawn inside each other
+        // Set the new asteroid poistion to be the same as the current asteroid
+        // but with a slight offset so they do not spawn inside each other
         Vector2 position = this.transform.position;
         position += Random.insideUnitCircle * 0.5f;
 

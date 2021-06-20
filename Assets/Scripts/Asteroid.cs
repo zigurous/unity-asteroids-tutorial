@@ -5,7 +5,6 @@
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
 public class Asteroid : MonoBehaviour
 {
     /// <summary>
@@ -48,31 +47,29 @@ public class Asteroid : MonoBehaviour
     /// <summary>
     /// The sprite renderer component attached to the asteroid.
     /// </summary>
-    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer spriteRenderer { get; private set; }
 
     /// <summary>
     /// The rigidbody component attached to the asteroid.
     /// </summary>
-    private Rigidbody2D _rigidbody;
+    public new Rigidbody2D rigidbody { get; private set; }
 
     private void Awake()
     {
-        // Store references to the asteroid's components
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        this.spriteRenderer = GetComponent<SpriteRenderer>();
+        this.rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        // Assign a random sprite to the asteroid
-        _spriteRenderer.sprite = this.sprites[Random.Range(0, this.sprites.Length)];
-
-        // Assign a random rotation to the asteroid
+        // Assign random properties to make each asteroid feel unique
+        this.spriteRenderer.sprite = this.sprites[Random.Range(0, this.sprites.Length)];
         this.transform.eulerAngles = new Vector3(0.0f, 0.0f, Random.value * 360.0f);
 
-        // Set the scale and mass of the asteroid based on the assigned size
+        // Set the scale and mass of the asteroid based on the assigned size so
+        // the physics is more realistic
         this.transform.localScale = Vector3.one * this.size;
-        _rigidbody.mass = this.size;
+        this.rigidbody.mass = this.size;
 
         // Destroy the asteroid after it reaches its max lifetime
         Destroy(this.gameObject, this.maxLifetime);
@@ -80,32 +77,27 @@ public class Asteroid : MonoBehaviour
 
     public void SetTrajectory(Vector2 direction)
     {
-        // Move the asteroid along the trajectory factoring in its speed
-        _rigidbody.AddForce(direction * this.movementSpeed);
+        // The asteroid only needs a force to be added once since they have no
+        // drag to make them stop moving
+        this.rigidbody.AddForce(direction * this.movementSpeed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the asteroid was hit by a bullet
         if (collision.gameObject.tag == "Bullet")
         {
             // Check if the asteroid is large enough to split in half (both
             // parts must be greater than the minimum size)
             if ((this.size * 0.5f) >= this.minSize)
             {
-                // Split the asteroid into two parts by creating two new
-                // asteroids
                 CreateSplit();
                 CreateSplit();
             }
 
-            // Inform the game manager the asteroid was destroyed so score can
-            // be calculated
             FindObjectOfType<GameManager>().AsteroidDestroyed(this);
 
             // Destroy the current asteroid since it is either replaced by two
-            // new asteroid objects or small enough to be destroyed by the
-            // bullet
+            // new asteroids or small enough to be destroyed by the bullet
             Destroy(this.gameObject);
         }
     }

@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.unity.2d.animation": {
-      "version": "3.2.14",
+      "version": "3.2.17",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.common": "2.1.0",
+        "com.unity.2d.common": "2.1.2",
         "com.unity.mathematics": "1.1.0",
         "com.unity.2d.sprite": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
@@ -14,7 +14,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.2d.common": {
-      "version": "2.1.0",
+      "version": "2.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -44,7 +44,7 @@
       "dependencies": {}
     },
     "com.unity.2d.spriteshape": {
-      "version": "3.0.17",
+      "version": "3.0.18",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -77,7 +77,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -91,7 +91,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.29",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {

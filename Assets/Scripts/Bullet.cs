@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     /// How fast the bullet travels.
     /// </summary>
     [Tooltip("How fast the bullet travels.")]
-    public float speed = 100.0f;
+    public float speed = 500.0f;
 
     /// <summary>
     /// The maximum amount of time the bullet will

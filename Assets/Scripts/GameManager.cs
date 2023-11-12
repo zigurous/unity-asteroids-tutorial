@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (this.lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
+        if (lives <= 0 && Input.GetKeyDown(KeyCode.Return)) {
             NewGame();
         }
     }
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             Destroy(asteroids[i].gameObject);
         }
 
-        this.gameOverUI.SetActive(false);
+        gameOverUI.SetActive(false);
 
         SetScore(0);
         SetLives(3);
@@ -42,32 +42,32 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        this.player.transform.position = Vector3.zero;
-        this.player.gameObject.SetActive(true);
+        player.transform.position = Vector3.zero;
+        player.gameObject.SetActive(true);
     }
 
     public void AsteroidDestroyed(Asteroid asteroid)
     {
-        this.explosionEffect.transform.position = asteroid.transform.position;
-        this.explosionEffect.Play();
+        explosionEffect.transform.position = asteroid.transform.position;
+        explosionEffect.Play();
 
         if (asteroid.size < 0.7f) {
-            SetScore(this.score + 100); // small asteroid
+            SetScore(score + 100); // small asteroid
         } else if (asteroid.size < 1.4f) {
-            SetScore(this.score + 50); // medium asteroid
+            SetScore(score + 50); // medium asteroid
         } else {
-            SetScore(this.score + 25); // large asteroid
+            SetScore(score + 25); // large asteroid
         }
     }
 
     public void PlayerDeath(Player player)
     {
-        this.explosionEffect.transform.position = player.transform.position;
-        this.explosionEffect.Play();
+        explosionEffect.transform.position = player.transform.position;
+        explosionEffect.Play();
 
-        SetLives(this.lives - 1);
+        SetLives(lives - 1);
 
-        if (this.lives <= 0) {
+        if (lives <= 0) {
             GameOver();
         } else {
             Invoke(nameof(Respawn), player.respawnDelay);
@@ -76,19 +76,19 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        this.gameOverUI.SetActive(true);
+        gameOverUI.SetActive(true);
     }
 
     private void SetScore(int score)
     {
         this.score = score;
-        this.scoreText.text = score.ToString();
+        scoreText.text = score.ToString();
     }
 
     private void SetLives(int lives)
     {
         this.lives = lives;
-        this.livesText.text = lives.ToString();
+        livesText.text = lives.ToString();
     }
 
 }

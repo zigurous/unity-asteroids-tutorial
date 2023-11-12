@@ -1,16 +1,54 @@
-﻿using UnityEngine;
+using UnityEngine;
 
+/// <summary>
+/// Handles the movement and shooting of the
+/// player ship.
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class Player : MonoBehaviour
 {
+    /// <summary>
+    /// How quickly the player is able to move forward.
+    /// </summary>
+    [Tooltip("How quickly the player is able to move forward.")]
     public float thrustSpeed = 1.0f;
+
+    /// <summary>
+    /// How quickly the player is able to turn.
+    /// </summary>
+    [Tooltip("How quickly the player is able to turn.")]
     public float rotationSpeed = 0.1f;
+
+    /// <summary>
+    /// The amount of seconds the player must wait
+    /// before shooting again. A higher value ensures
+    /// the player cannot shoot too quickly.
+    /// </summary>
+    [Tooltip("The amount of seconds the player must wait before shooting again. A higher value ensures the player cannot shoot too quickly.")]
     public float shootCooldown = 0.15f;
+
+    /// <summary>
+    /// The object that is cloned when creating a bullet.
+    /// </summary>
+    [Tooltip("The object that is cloned when creating a bullet.")]
     public Bullet bulletPrefab;
 
+    /// <summary>
+    /// The current direction the player is turning.
+    /// 1=left, -1=right, 0=none
+    /// </summary>
     private float _turnDirection = 0.0f;
+
+    /// <summary>
+    /// Whether the ship's thrusts are activated causing
+    /// it to move forward.
+    /// </summary>
     private bool _thrusting = false;
+
+    /// <summary>
+    /// Whether the player is waiting to shoot again.
+    /// </summary>
     private bool _shootingCooldown = false;
 
     /// <summary>
@@ -20,13 +58,17 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        // Store references to the player's components
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
+        // Activate thrust when pressing the 'w' key or 'up arrow' key
         _thrusting = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
+        // Set the turn direction of the ship based on
+        // which input key is being held
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
             _turnDirection = 1.0f;
         } else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
@@ -35,6 +77,8 @@ public class Player : MonoBehaviour
             _turnDirection = 0.0f;
         }
 
+        // Shoot a bullet each time the 'space' key is pressed
+        // or when the mouse left button is clicked
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
             Shoot();
         }
@@ -55,13 +99,7 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        // Prevent shooting if on cooldown
-        if (_shootingCooldown) {
-            return;
-        }
-
-        // Spawn a bullet and project it the
-        // direction the player is aiming
+        // Spawn a bullet and project it the direction the player is aiming
         Bullet bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.Project(this.transform.up);
 
@@ -84,10 +122,12 @@ public class Player : MonoBehaviour
         // Check if the player crashed into an asteroid
         if (collision.gameObject.tag == "Asteroid")
         {
-            this.gameObject.SetActive(false);
-
+            // Stop all movement of the ship
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = 0.0f;
+
+            // Stop all player controls and rendering of the ship
+            this.gameObject.SetActive(false);
 
             // Inform the game manager the player has died
             // so the lives can be updated along with any

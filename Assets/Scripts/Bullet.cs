@@ -1,28 +1,11 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Handles the physics/movement of a bullet projectile.
-/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    /// <summary>
-    /// How fast the bullet travels.
-    /// </summary>
-    [Tooltip("How fast the bullet travels.")]
-    public float speed = 500.0f;
-
-    /// <summary>
-    /// The maximum amount of time the bullet will stay alive after being
-    /// projected.
-    /// </summary>
-    [Tooltip("The maximum amount of time the bullet will stay alive after being projected.")]
-    public float maxLifetime = 10.0f;
-
-    /// <summary>
-    /// The rigidbody component attached to the bullet.
-    /// </summary>
     public new Rigidbody2D rigidbody { get; private set; }
+    public float speed = 500.0f;
+    public float maxLifetime = 10.0f;
 
     private void Awake()
     {

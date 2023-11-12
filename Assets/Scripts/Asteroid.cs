@@ -1,58 +1,18 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Handles the movement and collision of an asteroid.
-/// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : MonoBehaviour
 {
-    /// <summary>
-    /// An array of sprites of which one is randomly assigned to the asteroid.
-    /// </summary>
-    [Tooltip("An array of sprites of which one is randomly assigned to the asteroid.")]
+    public new Rigidbody2D rigidbody { get; private set; }
+    public SpriteRenderer spriteRenderer { get; private set; }
     public Sprite[] sprites;
 
-    /// <summary>
-    /// The current assigned size of the asteroid.
-    /// </summary>
-    [HideInInspector]
     public float size = 1.0f;
-
-    /// <summary>
-    /// The minimum size that can be assigned to the asteroid.
-    /// </summary>
-    [Tooltip("The minimum size that can be assigned to the asteroid.")]
     public float minSize = 0.35f;
-
-    /// <summary>
-    /// The maximum size that can be assigned to the asteroid.
-    /// </summary>
-    [Tooltip("The maximum size that can be assigned to the asteroid.")]
     public float maxSize = 1.65f;
-
-    /// <summary>
-    /// How quickly the asteroid moves along its trajectory.
-    /// </summary>
-    [Tooltip("How quickly the asteroid moves along its trajectory.")]
     public float movementSpeed = 50.0f;
-
-    /// <summary>
-    /// The maximum amount of time the asteroid can stay alive after which it is
-    /// destroyed.
-    /// </summary>
-    [Tooltip("The maximum amount of time the asteroid can stay alive after which it is destroyed.")]
     public float maxLifetime = 30.0f;
-
-    /// <summary>
-    /// The sprite renderer component attached to the asteroid.
-    /// </summary>
-    public SpriteRenderer spriteRenderer { get; private set; }
-
-    /// <summary>
-    /// The rigidbody component attached to the asteroid.
-    /// </summary>
-    public new Rigidbody2D rigidbody { get; private set; }
 
     private void Awake()
     {
@@ -86,8 +46,8 @@ public class Asteroid : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bullet")
         {
-            // Check if the asteroid is large enough to split in half (both
-            // parts must be greater than the minimum size)
+            // Check if the asteroid is large enough to split in half
+            // (both parts must be greater than the minimum size)
             if ((this.size * 0.5f) >= this.minSize)
             {
                 CreateSplit();

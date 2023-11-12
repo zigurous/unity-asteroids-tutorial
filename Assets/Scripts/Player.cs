@@ -1,57 +1,19 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Handles the movement and shooting of the player ship.
-/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    /// <summary>
-    /// How quickly the player is able to move forward.
-    /// </summary>
-    [Tooltip("How quickly the player is able to move forward.")]
-    public float thrustSpeed = 1.0f;
-
-    /// <summary>
-    /// How quickly the player is able to turn.
-    /// </summary>
-    [Tooltip("How quickly the player is able to turn.")]
-    public float rotationSpeed = 0.1f;
-
-    /// <summary>
-    /// The amount of seconds it takes for the player to respawn after dying.
-    /// </summary>
-    [Tooltip("The amount of seconds it takes for the player to respawn after dying.")]
-    public float respawnDelay = 3.0f;
-
-    /// <summary>
-    /// The amount of seconds the player has invulnerability after respawning.
-    /// This is to prevent the player from instantly dying if spawning into an
-    /// asteroid.
-    /// </summary>
-    [Tooltip("The amount of seconds the player has invulnerability after respawning. This is to prevent the player from instantly dying if spawning into an asteroid.")]
-    public float respawnInvulnerability = 3.0f;
-
-    /// <summary>
-    /// The object that is cloned when creating a bullet.
-    /// </summary>
-    [Tooltip("The object that is cloned when creating a bullet.")]
+    public new Rigidbody2D rigidbody { get; private set; }
     public Bullet bulletPrefab;
 
-    /// <summary>
-    /// The current direction the player is turning. 1=left, -1=right, 0=none
-    /// </summary>
-    public float turnDirection { get; private set; } = 0.0f;
-
-    /// <summary>
-    /// Whether the ship's thrusts are activated causing it to move forward.
-    /// </summary>
+    public float thrustSpeed = 1.0f;
     public bool thrusting { get; private set; }
 
-    /// <summary>
-    /// The rigidbody component attached to the player.
-    /// </summary>
-    public new Rigidbody2D rigidbody { get; private set; }
+    public float turnDirection { get; private set; } = 0.0f;
+    public float rotationSpeed = 0.1f;
+
+    public float respawnDelay = 3.0f;
+    public float respawnInvulnerability = 3.0f;
 
     private void Awake()
     {
@@ -63,7 +25,6 @@ public class Player : MonoBehaviour
         // Turn off collisions for a few seconds after spawning to ensure the
         // player has enough time to safely move away from asteroids
         this.gameObject.layer = LayerMask.NameToLayer("Ignore Collisions");
-
         Invoke(nameof(TurnOnCollisions), this.respawnInvulnerability);
     }
 
@@ -86,12 +47,10 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Add force to move the ship forward
         if (this.thrusting) {
             this.rigidbody.AddForce(this.transform.up * this.thrustSpeed);
         }
 
-        // Add torque to rotate the ship
         if (this.turnDirection != 0.0f) {
             this.rigidbody.AddTorque(this.rotationSpeed * this.turnDirection);
         }

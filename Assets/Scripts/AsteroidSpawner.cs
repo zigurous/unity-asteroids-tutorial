@@ -1,39 +1,11 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Continuously spawns asteroids and sets their initial trajectory.
-/// </summary>
 public class AsteroidSpawner : MonoBehaviour
 {
-    /// <summary>
-    /// The object that is cloned when spawning an asteroid.
-    /// </summary>
-    [Tooltip("The object that is cloned when spawning an asteroid.")]
     public Asteroid asteroidPrefab;
-
-    /// <summary>
-    /// The distance the asteroids spawn from the spawner.
-    /// </summary>
-    [Tooltip("The distance the asteroids spawn from the spawner.")]
     public float spawnDistance = 12.0f;
-
-    /// <summary>
-    /// The amount of seconds between spawn cycles.
-    /// </summary>
-    [Tooltip("The amount of seconds between spawn cycles.")]
     public float spawnRate = 1.0f;
-
-    /// <summary>
-    /// The amount of asteroids spawned each cycle.
-    /// </summary>
-    [Tooltip("The amount of asteroids spawned each cycle.")]
     public int amountPerSpawn = 1;
-
-    /// <summary>
-    /// The maximum angle in degrees the asteroid will steer from its initial
-    /// trajectory.
-    /// </summary>
-    [Tooltip("The maximum angle in degrees the asteroid will steer from its initial trajectory.")]
     [Range(0.0f, 45.0f)]
     public float trajectoryVariance = 15.0f;
 
@@ -65,7 +37,7 @@ public class AsteroidSpawner : MonoBehaviour
             Asteroid asteroid = Instantiate(this.asteroidPrefab, spawnPoint, rotation);
             asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
 
-            // The asteroid will float towards the spawner location
+            // Set the trajectory to move in the direction of the spawner
             Vector2 trajectory = rotation * -spawnDirection;
             asteroid.SetTrajectory(trajectory);
         }

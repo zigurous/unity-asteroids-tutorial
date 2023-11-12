@@ -49,6 +49,16 @@ public class Player : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void OnEnable()
+    {
+        // Turn off collisions for a few seconds after
+        // spawning to ensure the player has enough
+        // time to safely move away from asteroids
+        this.gameObject.layer = LayerMask.NameToLayer("Ignore Collisions");
+
+        Invoke(nameof(TurnOnCollisions), 3.0f);
+    }
+
     private void Update()
     {
         // Activate thrust when pressing the 'w' key or 'up arrow' key
@@ -89,6 +99,11 @@ public class Player : MonoBehaviour
         // Spawn a bullet and project it the direction the player is aiming
         Bullet bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
         bullet.Project(this.transform.up);
+    }
+
+    private void TurnOnCollisions()
+    {
+        this.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

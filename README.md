@@ -5,6 +5,5 @@
 - **Difficulty**: Intermediate
 - **Topics**: Multi-directional Shooting, Random Generation
 - **Version**: Unity 2019.4 LTS
-- **Author**: [@adamgraham](https://github.com/adamgraham)
-- [**Tutorial Video**](https://youtu.be/cIeWhztKyAg)
-- [**Source Code**](https://github.com/zigurous/unity-asteroids-tutorial)
+- [**Download**](https://github.com/zigurous/unity-asteroids-tutorial/archive/refs/tags/v1.0.0.zip)
+- [**Watch Video**](https://youtu.be/cIeWhztKyAg)

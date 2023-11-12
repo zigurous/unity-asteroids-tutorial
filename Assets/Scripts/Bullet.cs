@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Handles the physics/movement of a bullet
-/// projectile.
+/// Handles the physics/movement of a bullet projectile.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -15,8 +14,8 @@ public class Bullet : MonoBehaviour
     public float speed = 500.0f;
 
     /// <summary>
-    /// The maximum amount of time the bullet will
-    /// stay alive after being projected.
+    /// The maximum amount of time the bullet will stay alive after being
+    /// projected.
     /// </summary>
     [Tooltip("The maximum amount of time the bullet will stay alive after being projected.")]
     public float maxLifetime = 10.0f;
@@ -34,8 +33,8 @@ public class Bullet : MonoBehaviour
 
     public void Project(Vector2 direction)
     {
-        // Move the bullet in the desired direction
-        // while factoring in the speed of the bullet
+        // Move the bullet in the desired direction while factoring in the speed
+        // of the bullet
         _rigidbody.AddForce(direction * this.speed);
 
         // Destroy the bullet after it reaches its max lifetime

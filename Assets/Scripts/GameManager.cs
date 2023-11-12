@@ -2,8 +2,8 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// Manages the state of the game, such as
-/// scoring, dying, and starting a new game.
+/// Manages the state of the game, such as scoring, dying, and starting a new
+/// game.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -14,8 +14,8 @@ public class GameManager : MonoBehaviour
     public Player player;
 
     /// <summary>
-    /// The particle effect that is played when an
-    /// asteroid is destroyed and when the player dies.
+    /// The particle effect that is played when an asteroid is destroyed and
+    /// when the player dies.
     /// </summary>
     [Tooltip("The particle effect that is played when an asteroid is destroyed and when the player dies.")]
     public ParticleSystem explosionEffect;
@@ -82,8 +82,7 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        // Move the player back to the center
-        // and reactivate their controls
+        // Move the player back to the center and reactivate their controls
         this.player.transform.position = Vector3.zero;
         this.player.gameObject.SetActive(true);
     }
@@ -106,8 +105,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDeath(Player player)
     {
-        // Play the explosion effect at the
-        // location of the player
+        // Play the explosion effect at the location of the player
         this.explosionEffect.transform.position = player.transform.position;
         this.explosionEffect.Play();
 

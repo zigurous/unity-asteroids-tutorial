@@ -39,7 +39,6 @@ public class AsteroidSpawner : MonoBehaviour
 
     private void Start()
     {
-        // Start spawning an asteroid at a fixed rate
         InvokeRepeating(nameof(Spawn), this.spawnRate, this.spawnRate);
     }
 

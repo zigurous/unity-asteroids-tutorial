@@ -1,9 +1,9 @@
-# Project Title
+# Asteroids (2D)
 
-> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nibh elit, iaculis id condimentum vitae, efficitur nec lorem. Nam convallis ligula vitae velit porta interdum. Donec euismod sem ligula, aliquet lacinia eros mollis molestie. Maecenas et enim mollis lacus ultrices consequat. Quisque vehicula id neque sit amet placerat. Etiam posuere vel ipsum vel tincidunt. Nulla et efficitur urna. Phasellus varius gravida velit non commodo. Vivamus sagittis commodo nibh vitae posuere.
+> Asteroids is a space-themed multidirectional shooter arcade game designed by Lyle Rains, Ed Logg, and Dominic Walsh and released in November 1979 by Atari, Inc. The player controls a single spaceship in an asteroid field which is periodically traversed by flying saucers. The object of the game is to shoot and destroy the asteroids and saucers, while not colliding with either, or being hit by the saucers' counter-fire. The game becomes harder as the number of asteroids increases.
 
-- **Difficulty**:
-- **Topics**:
+- **Difficulty**: Intermediate
+- **Topics**: Multi-directional shooting, random generation
 - **Version**: Unity 2019.4.13f1
 - **Author**: [@adamgraham](https://github.com/adamgraham)
-- [**Source Code**](https://github.com/zigurous)
+- [**Source Code**](https://github.com/zigurous/unity-asteroids-tutorial)

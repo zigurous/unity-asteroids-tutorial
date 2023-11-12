@@ -4,9 +4,11 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class Asteroid : MonoBehaviour
 {
-    public new Rigidbody2D rigidbody { get; private set; }
-    public SpriteRenderer spriteRenderer { get; private set; }
-    public Sprite[] sprites;
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+
+    [SerializeField]
+    private Sprite[] sprites;
 
     public float size = 1f;
     public float minSize = 0.35f;
@@ -16,8 +18,8 @@ public class Asteroid : MonoBehaviour
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -29,7 +31,7 @@ public class Asteroid : MonoBehaviour
         // Set the scale and mass of the asteroid based on the assigned size so
         // the physics is more realistic
         transform.localScale = Vector3.one * size;
-        rigidbody.mass = size;
+        rb.mass = size;
 
         // Destroy the asteroid after it reaches its max lifetime
         Destroy(gameObject, maxLifetime);
@@ -39,7 +41,7 @@ public class Asteroid : MonoBehaviour
     {
         // The asteroid only needs a force to be added once since they have no
         // drag to make them stop moving
-        rigidbody.AddForce(direction * movementSpeed);
+        rb.AddForce(direction * movementSpeed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

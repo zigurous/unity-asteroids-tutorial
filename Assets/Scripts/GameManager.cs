@@ -5,14 +5,17 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public int score { get; private set; }
-    public int lives { get; private set; }
-
     [SerializeField] private Player player;
     [SerializeField] private ParticleSystem explosionEffect;
     [SerializeField] private GameObject gameOverUI;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text livesText;
+
+    private int score;
+    private int lives;
+
+    public int Score => score;
+    public int Lives => lives;
 
     private void Awake()
     {

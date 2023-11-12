@@ -3,14 +3,17 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-    public new Rigidbody2D rigidbody { get; private set; }
-    public Bullet bulletPrefab;
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private Bullet bulletPrefab;
 
     public float thrustSpeed = 1f;
-    public bool thrusting { get; private set; }
+    private bool thrusting;
+    public bool IsThrusting => thrusting;
 
-    public float turnDirection { get; private set; } = 0f;
     public float rotationSpeed = 0.1f;
+    private float turnDirection;
 
     public float respawnDelay = 3f;
     public float respawnInvulnerability = 3f;
@@ -20,7 +23,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -66,11 +69,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         if (thrusting) {
-            rigidbody.AddForce(transform.up * thrustSpeed);
+            rb.AddForce(transform.up * thrustSpeed);
         }
 
         if (turnDirection != 0f) {
-            rigidbody.AddTorque(rotationSpeed * turnDirection);
+            rb.AddTorque(rotationSpeed * turnDirection);
         }
 
         if (screenWrapping) {
@@ -81,17 +84,17 @@ public class Player : MonoBehaviour
     private void ScreenWrap()
     {
         // Move to the opposite side of the screen if the player exceeds the bounds
-        if (rigidbody.position.x > screenBounds.max.x + 0.5f) {
-            rigidbody.position = new Vector2(screenBounds.min.x - 0.5f, rigidbody.position.y);
+        if (rb.position.x > screenBounds.max.x + 0.5f) {
+            rb.position = new Vector2(screenBounds.min.x - 0.5f, rb.position.y);
         }
-        else if (rigidbody.position.x < screenBounds.min.x - 0.5f) {
-            rigidbody.position = new Vector2(screenBounds.max.x + 0.5f, rigidbody.position.y);
+        else if (rb.position.x < screenBounds.min.x - 0.5f) {
+            rb.position = new Vector2(screenBounds.max.x + 0.5f, rb.position.y);
         }
-        else if (rigidbody.position.y > screenBounds.max.y + 0.5f) {
-            rigidbody.position = new Vector2(rigidbody.position.x, screenBounds.min.y - 0.5f);
+        else if (rb.position.y > screenBounds.max.y + 0.5f) {
+            rb.position = new Vector2(rb.position.x, screenBounds.min.y - 0.5f);
         }
-        else if (rigidbody.position.y < screenBounds.min.y - 0.5f) {
-            rigidbody.position = new Vector2(rigidbody.position.x, screenBounds.max.y + 0.5f);
+        else if (rb.position.y < screenBounds.min.y - 0.5f) {
+            rb.position = new Vector2(rb.position.x, screenBounds.max.y + 0.5f);
         }
     }
 
@@ -115,8 +118,8 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Asteroid"))
         {
-            rigidbody.velocity = Vector3.zero;
-            rigidbody.angularVelocity = 0f;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = 0f;
 
             GameManager.Instance.OnPlayerDeath(this);
         }

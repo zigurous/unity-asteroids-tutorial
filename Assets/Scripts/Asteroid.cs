@@ -54,7 +54,7 @@ public class Asteroid : MonoBehaviour
                 CreateSplit();
             }
 
-            FindObjectOfType<GameManager>().AsteroidDestroyed(this);
+            GameManager.Instance.OnAsteroidDestroyed(this);
 
             // Destroy the current asteroid since it is either replaced by two
             // new asteroids or small enough to be destroyed by the bullet

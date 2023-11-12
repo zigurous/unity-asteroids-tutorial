@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public void Project(Vector2 direction)
+    public void Shoot(Vector2 direction)
     {
         // The bullet only needs a force to be added once since they have no
         // drag to make them stop moving

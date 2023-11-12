@@ -3,15 +3,26 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public Player player;
-    public ParticleSystem explosionEffect;
-    public GameObject gameOverUI;
+    public static GameManager Instance { get; private set; }
 
     public int score { get; private set; }
-    public Text scoreText;
-
     public int lives { get; private set; }
-    public Text livesText;
+
+    [SerializeField] private Player player;
+    [SerializeField] private ParticleSystem explosionEffect;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private Text scoreText;
+    [SerializeField] private Text livesText;
+
+    private void Awake()
+    {
+        if (Instance != null) {
+            DestroyImmediate(gameObject);
+        } else {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -25,7 +36,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NewGame()
+    private void NewGame()
     {
         Asteroid[] asteroids = FindObjectsOfType<Asteroid>();
 
@@ -40,13 +51,25 @@ public class GameManager : MonoBehaviour
         Respawn();
     }
 
-    public void Respawn()
+    private void SetScore(int score)
+    {
+        this.score = score;
+        scoreText.text = score.ToString();
+    }
+
+    private void SetLives(int lives)
+    {
+        this.lives = lives;
+        livesText.text = lives.ToString();
+    }
+
+    private void Respawn()
     {
         player.transform.position = Vector3.zero;
         player.gameObject.SetActive(true);
     }
 
-    public void AsteroidDestroyed(Asteroid asteroid)
+    public void OnAsteroidDestroyed(Asteroid asteroid)
     {
         explosionEffect.transform.position = asteroid.transform.position;
         explosionEffect.Play();
@@ -60,35 +83,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayerDeath(Player player)
+    public void OnPlayerDeath(Player player)
     {
+        player.gameObject.SetActive(false);
+
         explosionEffect.transform.position = player.transform.position;
         explosionEffect.Play();
 
         SetLives(lives - 1);
 
         if (lives <= 0) {
-            GameOver();
+            gameOverUI.SetActive(true);
         } else {
             Invoke(nameof(Respawn), player.respawnDelay);
         }
-    }
-
-    public void GameOver()
-    {
-        gameOverUI.SetActive(true);
-    }
-
-    private void SetScore(int score)
-    {
-        this.score = score;
-        scoreText.text = score.ToString();
-    }
-
-    private void SetLives(int lives)
-    {
-        this.lives = lives;
-        livesText.text = lives.ToString();
     }
 
 }

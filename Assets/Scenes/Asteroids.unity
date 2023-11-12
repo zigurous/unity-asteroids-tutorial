@@ -669,6 +669,7 @@ MonoBehaviour:
   rotationSpeed: 0.1
   respawnDelay: 3
   respawnInvulnerability: 3
+  screenWrapping: 1
 --- !u!1 &556392472
 GameObject:
   m_ObjectHideFlags: 0
@@ -5763,7 +5764,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0123456789
+  m_Text: 0
 --- !u!222 &1159035113
 CanvasRenderer:
   m_ObjectHideFlags: 0

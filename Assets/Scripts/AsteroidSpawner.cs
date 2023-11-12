@@ -20,12 +20,8 @@ public class AsteroidSpawner : MonoBehaviour
         {
             // Choose a random direction from the center of the spawner and
             // spawn the asteroid a distance away
-            Vector2 spawnDirection = Random.insideUnitCircle.normalized;
-            Vector3 spawnPoint = spawnDirection * spawnDistance;
-
-            // Offset the spawn point by the position of the spawner so its
-            // relative to the spawner location
-            spawnPoint += transform.position;
+            Vector3 spawnDirection = Random.insideUnitCircle.normalized;
+            Vector3 spawnPoint = transform.position + (spawnDirection * spawnDistance);
 
             // Calculate a random variance in the asteroid's rotation which will
             // cause its trajectory to change

@@ -9,8 +9,7 @@ public class Player : MonoBehaviour
     private Bullet bulletPrefab;
 
     public float thrustSpeed = 1f;
-    private bool thrusting;
-    public bool IsThrusting => thrusting;
+    public bool thrusting { get; private set; }
 
     public float rotationSpeed = 0.1f;
     private float turnDirection;

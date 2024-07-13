@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text scoreText;
     [SerializeField] private Text livesText;
 
-    public int score { get; private set; }
-    public int lives { get; private set; }
+    public int score { get; private set; } = 0;
+    public int lives { get; private set; } = 3;
 
     private void Awake()
     {
